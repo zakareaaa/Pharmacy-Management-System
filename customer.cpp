@@ -4,7 +4,7 @@
 using namespace std;
 
 static int uniqueID = 100;
-Customer::Customer(string name, const Address &addr) : customerID(++uniqueID) {
+Customer::Customer(string name, const Address addr) : customerID(++uniqueID) {
   setName(name);
   setAddress(addr);
 }
@@ -17,12 +17,12 @@ Address Customer::getAddress() { return address; }
 const int Customer::getCustomerID() { return customerID; }
 
 // Setters:
-void Customer::setName(string name) { 
-  while(name == ""){
-    cout<<"Enter Valid Name"<<endl;
-    cin>>name;
+void Customer::setName(string name) {
+  while (name == "") {
+    cout << "Enter Valid Name" << endl;
+    cin >> name;
   }
-  customerName = name; 
+  customerName = name;
 }
 
 // Display Function:

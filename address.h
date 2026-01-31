@@ -17,10 +17,10 @@ class Address {
     Address(string email = "Unknown", string city = "Unknown", string PhoneNum = "XXXXXX-XXX", string streetName = "Uknown");
 
   //Setters and Getters:
-    void setEmail(string &email_);
+    void setEmail(string email_);
     string getEmail();
 
-    void setCity(string &city_);
+    void setCity(string city_);
     string getCity();
 
     void setPhoneNum(string &phoneNum_);
