@@ -4,7 +4,7 @@
 using namespace std;
 
 static int uniqueID = 100;
-Customer::Customer(string name, Address addr) : customerID(++uniqueID) {
+Customer::Customer(string name, const Address &addr) : customerID(++uniqueID) {
   setName(name);
   setAddress(addr);
 }

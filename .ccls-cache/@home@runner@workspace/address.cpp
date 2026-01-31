@@ -8,7 +8,7 @@ Address::Address(string email_, string city_, string phoneNum_, string streetNam
   setStreetName(streetName_);
 }
 //Setters and getters
-void Address::setEmail(string email_) {
+void Address::setEmail(string &email_) {
   //checks if email is valid
   while(email_ == ""){
     cout << "Please enter a valid email: ";
@@ -16,7 +16,7 @@ void Address::setEmail(string email_) {
   }
   email = email_;
 }
-void Address::setCity(string city_) {
+void Address::setCity(string &city_) {
   //checks if city is valid
   while(city_ == ""){
     cout << "Please enter a valid city: ";
@@ -24,7 +24,7 @@ void Address::setCity(string city_) {
   }
   city = city_;
 }
-void Address::setPhoneNum(string phoneNum_) {
+void Address::setPhoneNum(string &phoneNum_) {
   //checks if phone number is valid
   while(phoneNum_== ""){
     cout << "Please enter a valid phone number: "<<endl;
@@ -32,7 +32,7 @@ void Address::setPhoneNum(string phoneNum_) {
   }
   PhoneNum = phoneNum_;
 }
-void Address::setStreetName(string streetName_) {
+void Address::setStreetName(string &streetName_) {
   //checks if street name is valid
   while(streetName_ == ""){
     cout << "Please enter a valid street name: "<<endl;

@@ -14,19 +14,19 @@ class Address {
 
   public:
   //Default Parameterized constructor for initializing data members:
-    Address(string email = "Unknown", string city = "Unknown", string PhoneNum = "XXXXXX-XXX", string streetName = "Unknown");
+    Address(string email = "Unknown", string city = "Unknown", string PhoneNum = "XXXXXX-XXX", string streetName = "Uknown");
 
   //Setters and Getters:
-    void setEmail(string email_);
+    void setEmail(string &email_);
     string getEmail();
 
-    void setCity(string city_);
+    void setCity(string &city_);
     string getCity();
 
-    void setPhoneNum(string phoneNum_);
+    void setPhoneNum(string &phoneNum_);
     string getPhonenUm();
 
-    void setStreetName(string streetName_);
+    void setStreetName(string &streetName_);
     string getStreetName();
 
 
