@@ -14,7 +14,7 @@ class Address {
 
   public:
   //Default Parameterized constructor for initializing data members:
-    Address(string email = "Uknown", string city = "Uknown", string PhoneNum = "XXXXXX-XXX", string streetName = "Uknown");
+    Address(string email = "Unknown", string city = "Unknown", string PhoneNum = "XXXXXX-XXX", string streetName = "Unknown");
 
   //Setters and Getters:
     void setEmail(string email_);
