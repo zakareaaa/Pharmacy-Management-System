@@ -13,7 +13,7 @@ private:
 
 public:
   // Default Parameterized constructor for initializing data members:
-  Customer(string name = "Uknown", const Address addr = Address());
+  Customer(string name = "Unknown", const Address &addr = Address());
   // Setters and getters:
   string getCustomerName();
   const int getCustomerID();

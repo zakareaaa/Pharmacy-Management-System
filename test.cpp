@@ -1,13 +1,8 @@
-#include "address.h"
-#include "customer.h"
+#include "medication.h"
+#include "offtheshelf.h"
+#include "prescription.h"
 #include <iostream>
 
 using namespace std;
 
-int main() {
-
-  Address a("zak@gmail.com", "New York", "10001","123 Main St");
-  Customer("Zakarea",a);
-
-  return 0;
-}
+int main() { return 0; }
