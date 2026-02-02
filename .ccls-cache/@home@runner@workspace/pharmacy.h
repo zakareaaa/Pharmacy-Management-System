@@ -17,6 +17,8 @@ public:
 //constructors
   Pharmacy();
   Pharmacy(string name, Medication*, int, Customer*, int);
+  Pharmacy(const Pharmacy& other);
+  Pharmacy& operator=(const Pharmacy& other);
 //destructor
   ~Pharmacy();
 //setters

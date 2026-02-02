@@ -17,9 +17,9 @@ int main() {
   m[1] = m2;
   m[2] = m3;
 
-  Customer c1("John", Address("123", "Main St", "New York", "NY", "10001"));
-  Customer c2("Jane", Address("456", "Main St", "New York", "NY", "10001"));
-  Customer c3("Jack", Address("789", "Main St", "New York", "NY", "10001"));
+  Customer c1("John", Address("zak@gmail.com", "New York","10001", "Main st."));
+  Customer c2("Jane", Address("f.hotmail.com", "New York","10002", "Main st."));
+  Customer c3("Jack", Address("jdjd@dhhd.com", "New York","10003", "Main st."));
 
   Customer *c = new Customer[3];
   c[0].setName(c1.getCustomerName());

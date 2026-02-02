@@ -15,9 +15,9 @@ public:
   // Default Parameterized constructor for initializing data members:
   Customer(string name = "Unknown", const Address &addr = Address());
   // Setters and getters:
-  string getCustomerName();
-  const int getCustomerID();
-  Address getAddress();
+  string getCustomerName() const;
+  int getCustomerID() const;
+  Address getAddress() const;
   void setName(string name);
   void displayCustomerInfo();
   void setAddress(const Address &);

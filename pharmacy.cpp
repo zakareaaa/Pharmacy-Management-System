@@ -23,6 +23,55 @@ Pharmacy::~Pharmacy() {
   delete[] medications;
   delete[] customers;
 }
+
+// Copy constructor
+Pharmacy::Pharmacy(const Pharmacy& other) : pharmacyId(++id), medicationCount(other.medicationCount), customerCount(other.customerCount) {
+  pharmacyName = other.pharmacyName;
+  medications = nullptr;
+  customers = nullptr;
+  if (other.medications != nullptr && medicationCount > 0) {
+    medications = new Medication[medicationCount];
+    for (int i = 0; i < medicationCount; i++) {
+      medications[i] = other.medications[i];
+    }
+  }
+  if (other.customers != nullptr && customerCount > 0) {
+    customers = new Customer[customerCount];
+    for (int i = 0; i < customerCount; i++) {
+      customers[i].setName(other.customers[i].getCustomerName());
+      customers[i].setAddress(other.customers[i].getAddress());
+    }
+  }
+}
+
+// Copy assignment operator
+Pharmacy& Pharmacy::operator=(const Pharmacy& other) {
+  if (this != &other) {
+    pharmacyName = other.pharmacyName;
+    medicationCount = other.medicationCount;
+    customerCount = other.customerCount;
+    
+    delete[] medications;
+    delete[] customers;
+    medications = nullptr;
+    customers = nullptr;
+    
+    if (other.medications != nullptr && medicationCount > 0) {
+      medications = new Medication[medicationCount];
+      for (int i = 0; i < medicationCount; i++) {
+        medications[i] = other.medications[i];
+      }
+    }
+    if (other.customers != nullptr && customerCount > 0) {
+      customers = new Customer[customerCount];
+      for (int i = 0; i < customerCount; i++) {
+        customers[i].setName(other.customers[i].getCustomerName());
+        customers[i].setAddress(other.customers[i].getAddress());
+      }
+    }
+  }
+  return *this;
+}
 void Pharmacy::setPharmacyName(string name) {
   // cant enter a name that is empty
   while (name == "") {
