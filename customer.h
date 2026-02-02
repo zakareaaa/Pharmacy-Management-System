@@ -6,7 +6,7 @@ using namespace std;
 #define CUSTOMER_H
 class Customer {
 private:
-  // Data members:
+  static int uniqueID;
   string customerName;
   int customerID;
   Address address;
