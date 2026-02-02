@@ -1,0 +1,44 @@
+g++ test.cpp customer.cpp address.cpp date.cpp medication.cpp prescription.cpp offtheshelf.cpp pharmacy.cpp -o program && ./program
+test.cpp: In function ‘int main()’:
+test.cpp:20:74: error: no matching function for call to ‘Address::Address(const char [4], const char [8], const char [9], const char [3], const char [6])’
+   20 |   Customer c1("John", Address("123", "Main St", "New York", "NY", "10001"));
+      |                                                                          ^
+In file included from customer.h:1,
+                 from pharmacy.h:1,
+                 from test.cpp:4:
+address.h:16:3: note: candidate: ‘Address::Address(std::string, std::string, std::string, std::string)’
+   16 |   Address(string email = "Unknown", string city = "Unknown",
+      |   ^~~~~~~
+address.h:16:3: note:   candidate expects 4 arguments, 5 provided
+address.h:6:7: note: candidate: ‘Address::Address(const Address&)’
+    6 | class Address {
+      |       ^~~~~~~
+address.h:6:7: note:   candidate expects 1 argument, 5 provided
+address.h:6:7: note: candidate: ‘Address::Address(Address&&)’
+address.h:6:7: note:   candidate expects 1 argument, 5 provided
+test.cpp:21:74: error: no matching function for call to ‘Address::Address(const char [4], const char [8], const char [9], const char [3], const char [6])’
+   21 |   Customer c2("Jane", Address("456", "Main St", "New York", "NY", "10001"));
+      |                                                                          ^
+address.h:16:3: note: candidate: ‘Address::Address(std::string, std::string, std::string, std::string)’
+   16 |   Address(string email = "Unknown", string city = "Unknown",
+      |   ^~~~~~~
+address.h:16:3: note:   candidate expects 4 arguments, 5 provided
+address.h:6:7: note: candidate: ‘Address::Address(const Address&)’
+    6 | class Address {
+      |       ^~~~~~~
+address.h:6:7: note:   candidate expects 1 argument, 5 provided
+address.h:6:7: note: candidate: ‘Address::Address(Address&&)’
+address.h:6:7: note:   candidate expects 1 argument, 5 provided
+test.cpp:22:74: error: no matching function for call to ‘Address::Address(const char [4], const char [8], const char [9], const char [3], const char [6])’
+   22 |   Customer c3("Jack", Address("789", "Main St", "New York", "NY", "10001"));
+      |                                                                          ^
+address.h:16:3: note: candidate: ‘Address::Address(std::string, std::string, std::string, std::string)’
+   16 |   Address(string email = "Unknown", string city = "Unknown",
+      |   ^~~~~~~
+address.h:16:3: note:   candidate expects 4 arguments, 5 provided
+address.h:6:7: note: candidate: ‘Address::Address(const Address&)’
+    6 | class Address {
+      |       ^~~~~~~
+address.h:6:7: note:   candidate expects 1 argument, 5 provided
+address.h:6:7: note: candidate: ‘Address::Address(Address&&)’
+address.h:6:7: note:   candidate expects 1 argument, 5 provided

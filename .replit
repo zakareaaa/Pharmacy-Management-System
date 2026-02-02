@@ -102,9 +102,9 @@ outputType = "console"
 name = "Test"
 author = "agent"
 
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "clang++ -g test.cpp address.cpp -o test && ./test"
-
 [workflows.workflow.metadata]
 outputType = "console"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "clang++ test.cpp customer.cpp address.cpp date.cpp medication.cpp prescription.cpp offtheshelf.cpp pharmacy.cpp -o program && ./program"
