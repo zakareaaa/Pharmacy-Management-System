@@ -6,33 +6,32 @@ using namespace std;
 
 class Pharmacy {
 private:
-  const int pharmacyId;
+  int pharmacyId;
   string pharmacyName;
   static int id;
   Medication *medications;
   int medicationCount;
   int customerCount;
   Customer *customers;
+
 public:
-//constructors
+  // constructors
   Pharmacy();
-  Pharmacy(string name, Medication*, int, Customer*, int);
-  Pharmacy(const Pharmacy& other);
-  Pharmacy& operator=(const Pharmacy& other);
-//destructor
+  Pharmacy(string name, Medication *, int, Customer *, int);
+  // destructor
   ~Pharmacy();
-//setters
+  // setters
   void setPharmacyName(string);
   void setMedications(Medication *, int);
   void setCustomers(Customer *, int);
-//getters
+  // getters
   string getPharmacyName();
   Medication *getMedication();
   Customer *getCustomer();
   int getMedicationCount();
   int getCustomerCount();
-//functions
-  void AddMedication( Medication);
+  // functions
+  void AddMedication(Medication);
   void AddCustomer(Customer);
   void removeMedication(string);
   void printMedication();

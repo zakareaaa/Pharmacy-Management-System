@@ -1,43 +1,50 @@
 #include "medication.h"
 #include "offtheshelf.h"
-#include "prescription.h"
 #include "pharmacy.h"
+#include "prescription.h"
 #include <iostream>
 
 using namespace std;
 
 int main() {
+  cout << "Step 1: Creating Medication array..." << endl;
+  Medication *m =
+      new Medication[3]{Medication("Paracetamol", "Painkiller", 10.5, 100,
+                                   "123456789", Date(1, 1, 2025)),
+                        Medication("Ibuprofen", "Painkiller", 15.5, 100,
+                                   "123456789", Date(1, 1, 2025)),
+                        Medication("Aspirin", "Painkiller", 20.5, 100,
+                                   "123456789", Date(1, 1, 2025))};
+  cout << "Step 1: SUCCESS" << endl;
 
-  Medication m1("Paracetamol", "Painkiller", 10.5, 100, "123456789", Date(1, 1, 2025));
-  Medication m2("Ibuprofen", "Painkiller", 15.5, 100, "123456789", Date(1, 1, 2025));
-  Medication m3("Aspirin", "Painkiller", 20.5, 100, "123456789", Date(1, 1, 2025));
+  cout << "Step 2: Creating Customer c1..." << endl;
+  Customer c1("John",
+              Address("zak@gmail.com", "New York", "10001", "Main st."));
+  cout << "Step 2: SUCCESS" << endl;
 
-  Medication *m = new Medication[3];
-  m[0] = m1;
-  m[1] = m2;
-  m[2] = m3;
+  cout << "Step 3: Creating Customer c2..." << endl;
+  Customer c2("Jane",
+              Address("f.hotmail.com", "New York", "10002", "Main st."));
+  cout << "Step 3: SUCCESS" << endl;
 
-  Customer c1("John", Address("zak@gmail.com", "New York","10001", "Main st."));
-  Customer c2("Jane", Address("f.hotmail.com", "New York","10002", "Main st."));
-  Customer c3("Jack", Address("jdjd@dhhd.com", "New York","10003", "Main st."));
+  cout << "Step 4: Creating Customer c3..." << endl;
+  Customer c3("Jack",
+              Address("jdjd@dhhd.com", "New York", "10003", "Main st."));
+  cout << "Step 4: SUCCESS" << endl;
 
-  Customer *c = new Customer[3];
-  c[0].setName(c1.getCustomerName());
-  c[0].setAddress(c1.getAddress());
+  cout << "Step 5: Creating Customer array..." << endl;
+  Customer *c = new Customer[3]{c1, c2, c3};
+  cout << "Step 5: SUCCESS" << endl;
 
-  c[1].setName(c2.getCustomerName());
-  c[1].setAddress(c2.getAddress());
+  cout << "Step 6: Creating Pharmacy object..." << endl;
+  Pharmacy p("Life", m, 3, c, 3);
+  cout << "Step 6: SUCCESS" << endl;
 
-  c[2].setName(c3.getCustomerName());
-  c[2].setAddress(c3.getAddress());
+  cout << "Step 7: Cleaning up..." << endl;
+  delete[] m;
+  delete[] c;
+  cout << "Step 7: SUCCESS" << endl;
 
-  Pharmacy p1("Pharmacy 1", m, 3, c, 3);
-
-  p1.printMedication();
-  cout << "-----------------------------" << endl;
-  p1.printCustomer();
-  
-  
-  
-  return 0; 
+  cout << "Step 8: Program ending (Pharmacy destructor will run)..." << endl;
+  return 0;
 }

@@ -15,6 +15,8 @@ Pharmacy::Pharmacy(string name, Medication *m1, int m_count, Customer *c1,
                    int c_count)
     : pharmacyId(++id), medicationCount(m_count), customerCount(c_count) {
   setPharmacyName(name);
+  medications = nullptr;
+  customers = nullptr;
   setMedications(m1, m_count);
   setCustomers(c1, c_count);
 }
@@ -22,55 +24,6 @@ Pharmacy::~Pharmacy() {
   // to avoid memory leaks
   delete[] medications;
   delete[] customers;
-}
-
-// Copy constructor
-Pharmacy::Pharmacy(const Pharmacy& other) : pharmacyId(++id), medicationCount(other.medicationCount), customerCount(other.customerCount) {
-  pharmacyName = other.pharmacyName;
-  medications = nullptr;
-  customers = nullptr;
-  if (other.medications != nullptr && medicationCount > 0) {
-    medications = new Medication[medicationCount];
-    for (int i = 0; i < medicationCount; i++) {
-      medications[i] = other.medications[i];
-    }
-  }
-  if (other.customers != nullptr && customerCount > 0) {
-    customers = new Customer[customerCount];
-    for (int i = 0; i < customerCount; i++) {
-      customers[i].setName(other.customers[i].getCustomerName());
-      customers[i].setAddress(other.customers[i].getAddress());
-    }
-  }
-}
-
-// Copy assignment operator
-Pharmacy& Pharmacy::operator=(const Pharmacy& other) {
-  if (this != &other) {
-    pharmacyName = other.pharmacyName;
-    medicationCount = other.medicationCount;
-    customerCount = other.customerCount;
-    
-    delete[] medications;
-    delete[] customers;
-    medications = nullptr;
-    customers = nullptr;
-    
-    if (other.medications != nullptr && medicationCount > 0) {
-      medications = new Medication[medicationCount];
-      for (int i = 0; i < medicationCount; i++) {
-        medications[i] = other.medications[i];
-      }
-    }
-    if (other.customers != nullptr && customerCount > 0) {
-      customers = new Customer[customerCount];
-      for (int i = 0; i < customerCount; i++) {
-        customers[i].setName(other.customers[i].getCustomerName());
-        customers[i].setAddress(other.customers[i].getAddress());
-      }
-    }
-  }
-  return *this;
 }
 void Pharmacy::setPharmacyName(string name) {
   // cant enter a name that is empty
@@ -145,18 +98,18 @@ void Pharmacy::printCustomer() {
 }
 void Pharmacy::removeMedication(string name) {
   int newSize = 0;
-  for(int i = 0;i<medicationCount;i++){
-    if(medications[i].getMedName() == name){
+  for (int i = 0; i < medicationCount; i++) {
+    if (medications[i].getMedName() != name) {
       newSize++;
     }
   }
-  if(newSize == medicationCount){
-    cout<<"Medication not found"<<endl;
+  if (newSize == medicationCount) {
+    cout << "Medication not found" << endl;
     return;
   }
   Medication *temp = new Medication[newSize];
   int index = 0;
-  for (int i = 0; i < medicationCount; i++){
+  for (int i = 0; i < medicationCount; i++) {
     if (medications[i].getMedName() != name) {
       temp[index] = medications[i];
       index++;
@@ -168,28 +121,28 @@ void Pharmacy::removeMedication(string name) {
 }
 void Pharmacy::removeCustomer(string name) {
   int newSize = 0;
-  for(int i = 0;i<customerCount;i++){
-    if(customers[i].getCustomerName() != name)
+  for (int i = 0; i < customerCount; i++) {
+    if (customers[i].getCustomerName() != name)
       newSize++;
   }
 
-  if(newSize == customerCount){
-    cout<<"Customer Not found"<<endl;
+  if (newSize == customerCount) {
+    cout << "Customer Not found" << endl;
     return;
   }
 
   Customer *temp = new Customer[newSize];
   int index = 0;
 
-  for(int i = 0;i<customerCount;i++){
-    if(customers[i].getCustomerName() != name){
+  for (int i = 0; i < customerCount; i++) {
+    if (customers[i].getCustomerName() != name) {
       temp[index].setName(customers[i].getCustomerName());
       temp[index].setAddress(customers[i].getAddress());
 
       index++;
     }
   }
-  delete []customers;
+  delete[] customers;
   customers = temp;
   customerCount = newSize;
 }

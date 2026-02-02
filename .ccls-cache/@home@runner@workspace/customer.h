@@ -8,7 +8,7 @@ class Customer {
 private:
   // Data members:
   string customerName;
-  const int customerID;
+  int customerID;
   Address address;
 
 public:

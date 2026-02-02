@@ -10,11 +10,11 @@ Customer::Customer(string name, const Address &addr) : customerID(++uniqueID) {
 }
 
 // Getters:
-string Customer::getCustomerName() { return customerName; }
+string Customer::getCustomerName() const { return customerName; }
 
-Address Customer::getAddress() { return address; }
+Address Customer::getAddress() const { return address; }
 
-const int Customer::getCustomerID() { return customerID; }
+int Customer::getCustomerID() const { return customerID; }
 
 // Setters:
 void Customer::setName(string name) {
