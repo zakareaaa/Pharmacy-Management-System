@@ -1,6 +1,11 @@
 #include "date.h"
 #include <iostream>
 using namespace std;
+
+
+
+
+
 //default param constructor
 Date::Date(int day, int month, int year) {
   setDay(day);
@@ -13,7 +18,7 @@ void Date::setDay(int day) {
     cout<<"Enter Valid Day"<<endl;
     cin>>day;
   }
-  day_ = day;
+  this->day = day;
 }
 void Date::setMonth(int month) {
 //only months between 1 and 12 is valid
@@ -21,7 +26,7 @@ void Date::setMonth(int month) {
     cout<<"Enter Valid Month"<<endl;
     cin>>month;
   }
-  month_ = month;
+  this->month = month;
 }
 void Date::setYear(int year) {
 //only years between 1900 and 2099 is valid
@@ -29,13 +34,22 @@ void Date::setYear(int year) {
     cout<<"Enter Valid year"<<endl;
     cin>>year;
   }
-  year_ = year;
+  this->year = year;
 }
 //getters
-int Date::getDay() const { return day_; }
-int Date::getMonth() const { return month_; }
-int Date::getYear() const { return year_; }
+int Date::getDay() const { return day; }
+int Date::getMonth() const { return month; }
+int Date::getYear() const { return year; }
 //print the date with format d/m/yyyy
 void Date::printDate() {
-  cout << day_ << "/" << month_ << "/" << year_ << endl;
+  cout << day << "/" << month << "/" << year << endl;
+}
+bool Date::operator<(const Date &other) const {
+  if (year != other.year)
+    return year < other.year;
+
+  if (month != other.month)
+    return month < other.month;
+
+  return day < other.day;
 }
