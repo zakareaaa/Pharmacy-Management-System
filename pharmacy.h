@@ -40,4 +40,6 @@ public:
 
   void checkLowStock();
   void restockMedication(string, int);
+
+  void checkExpiredMedication();
 };
