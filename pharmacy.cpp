@@ -146,9 +146,42 @@ void Pharmacy::removeCustomer(string name) {
   customers = temp;
   customerCount = newSize;
 }
+
+  void Pharmacy::checkLowStock(){
+    bool foundLowStock = false;  
+
+    for(int i = 0; i < medicationCount; i++){
+      if(medications[i].getQuantityInStock() < 10) {
+        cout<<medications[i].getMedName()<<" is low in stock ("
+            <<medications[i].getQuantityInStock()<<")"<<endl;
+        cout<<"-----------------------------"<<endl;
+        foundLowStock = true;  
+      }
+    }
+
+    if(!foundLowStock) {  
+      cout<<"All medications are well stocked!"<<endl;
+    }
+  }
+
+void Pharmacy::restockMedication(string name, int quantity){
+  if(quantity <= 0){
+    cout<<"Invalid Quantity"<<endl;
+    return;
+  }
+    
+  for(int i = 0; i < medicationCount; i++){
+    if(medications[i].getMedName() == name){
+      medications[i].setQuantityInStock(medications[i].getQuantityInStock() + quantity);
+      cout<<"Medication Restocked!"<<endl;
+    }
+  }
+}
+
 // getters
 Medication *Pharmacy::getMedication() { return medications; }
 Customer *Pharmacy::getCustomer() { return customers; }
 string Pharmacy::getPharmacyName() { return pharmacyName; }
 int Pharmacy::getMedicationCount() { return medicationCount; }
 int Pharmacy::getCustomerCount() { return customerCount; }
+
