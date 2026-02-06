@@ -13,11 +13,12 @@ Medication::Medication(string Name, string desc, double price_, int quant,
   setQuantityInStock(quant);
   setBarcode(code);
 }
+Medication::~Medication() {}
 void Medication::setMedName(string medName_) {
   while (medName_ == "") {
     // if the name is not empty
     cout << "Enter Valid Medication Name" << endl;
-    cin>>medName_;
+    cin >> medName_;
   }
   medName = medName_;
 }

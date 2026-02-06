@@ -24,7 +24,7 @@ public:
   Date getApproval() const;
   int getFDA() const;
 
-  void printPrescription();
+  void print() override;
 };
 
 #endif

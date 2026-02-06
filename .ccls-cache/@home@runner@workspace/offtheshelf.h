@@ -28,7 +28,7 @@ public:
   Date getOfferEnds() const;
 
   // Print
-  void printOffTheShelf();
+  void print() override;
 };
 
 #endif

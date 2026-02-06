@@ -5,7 +5,7 @@ using namespace std;
 #ifndef MEDICATION_H
 #define MEDICATION_H
 class Medication {
-private:
+protected:
   int medId;
   string medName;
   string description;
@@ -19,6 +19,7 @@ public:
   // Default Parameterized Constructor
   Medication(string Name = "Uknown", string desc = "Uknown", double price_ = 0,
              int quant = 0, string code = "Uknown", Date exp = Date());
+  virtual ~Medication();
   // Setters
   void setMedName(string medName_);
   void setDescription(string description_);
@@ -35,6 +36,6 @@ public:
   Date getExpiryDate() const;
   int getMedId() const;
 
-  void print();
+  virtual void print();
 };
 #endif

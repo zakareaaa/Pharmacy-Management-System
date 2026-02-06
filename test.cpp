@@ -6,7 +6,7 @@
 
 using namespace std;
 
-int main() {
+int test() {
   cout << "Step 1: Creating Medication array..." << endl;
   Medication *m =
       new Medication[3]{Medication("Paracetamol", "Painkiller", 10.5, 100,

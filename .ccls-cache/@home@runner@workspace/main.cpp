@@ -11,12 +11,14 @@
 using namespace std;
 int main() {
 
-  int pNum = 0;
+  int pNum = 0;//keeps track of the number of pharmacies added
   cout << "Welcome to the Pharmacy Management System" << endl;
-  int pharmacySize;
+  int pharmacySize = 0;
   //setting the size of the pharmacy array
   cout << "Enter Number Of Pharmacies: ";
-  cin >> pharmacySize;
+  //input validation
+  while (pharmacySize <= 0)
+    cin >> pharmacySize;
   cout<<endl;
   [[maybe_unused]] 
   Pharmacy *p = new Pharmacy[pharmacySize];
@@ -38,11 +40,12 @@ int main() {
       //keep track of the number of pharmacies added (making sure it doesn't exceed the size of the array)
       if (pNum < pharmacySize) {
         string Pname;
-        int medicationNum, customerNum;
+        int medicationNum = 0, customerNum = 0;
         cout << "Enter Pharmacy Name: ";
         cin >> Pname;
         cout << "Enter Number Of Medications: ";
-        cin >> medicationNum;
+        while (medicationNum <= 0)
+          cin >> medicationNum;
         Medication *m1 = new Medication[medicationNum];
         for (int i = 0; i < medicationNum; i++) {
           string medName, desc, bar;
@@ -70,10 +73,11 @@ int main() {
           m1[i] = Medication(medName, desc, price, quantity, bar,
                              Date(day, month, year));
         }
-        cout << "Medication Added!" << endl;
+        cout << "Medications Added!" << endl;
         cout << endl;
         cout << "Enter Number Of Customers: ";
-        cin >> customerNum;
+        while (customerNum <= 0)
+          cin >> customerNum;
         Customer *c1 = new Customer[customerNum];
         for (int i = 0; i < customerNum; i++) {
           string cName, city, street, email, phoneNum;
@@ -97,6 +101,10 @@ int main() {
         p[pNum].setCustomers(c1, customerNum);
         p[pNum].setMedications(m1, medicationNum);
         p[pNum].setPharmacyName(Pname);
+
+        delete[] m1;
+        delete[] c1;
+        
         cout << "Pharmacy Added!" << endl;
         cout<<endl;
         pNum++;
