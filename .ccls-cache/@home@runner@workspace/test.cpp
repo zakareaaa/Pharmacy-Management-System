@@ -6,7 +6,7 @@
 
 using namespace std;
 
-int main() {
+int test() {
   Medication *m =
       new Medication[3]{Medication("Paracetamol", "Painkiller", 10.5, 9,
                                    "123456789", Date(1, 1, 2025)),
@@ -29,7 +29,6 @@ int main() {
   Pharmacy p("Life", m, 3, c, 3);
 
   p.checkExpiredMedication();
-            
 
   return 0;
 }

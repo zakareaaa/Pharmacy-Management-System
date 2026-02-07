@@ -20,6 +20,7 @@ Date OffTheShelf::getOfferEnds() const { return OfferEnds; }
 
 void OffTheShelf::print() {
   Medication::print(); // Call base class print()
+
   // Create a copy of OfferEnds to modify for display
   Date displayDate = OfferEnds;
 
