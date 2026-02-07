@@ -6,7 +6,7 @@ OffTheShelf::OffTheShelf(const string &Name, const string &desc, double price_,
                          int quant, const string &code, int eday, int emonth,
                          int eyear, bool bogof, int day, int month, int year)
     : Medication(Name, desc, price_, quant, code, Date(eday, emonth, eyear)),
-      OfferEnds(day, month, year), BOGOF(bogof) {
+      BOGOF(bogof), OfferEnds(day, month, year) {
   // Constructor body empty - everything initialized in initializer list
 }
 

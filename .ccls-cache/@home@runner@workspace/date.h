@@ -1,10 +1,11 @@
 #include <iostream>
+#include <ctime>
 using namespace std;
 #ifndef DATE_H
 #define DATE_H
 class Date {
 private:
-  int day_, month_, year_;
+  int day, month, year;
 
 public:
 // Default param constructor
@@ -19,5 +20,7 @@ public:
   int getYear() const;
 //print function
   void printDate();
+
+  bool operator<(const Date &) const;
 };
 #endif

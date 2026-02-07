@@ -146,6 +146,58 @@ void Pharmacy::removeCustomer(string name) {
   customers = temp;
   customerCount = newSize;
 }
+
+void Pharmacy::checkLowStock() {
+  bool foundLowStock = false;
+
+  for (int i = 0; i < medicationCount; i++) {
+    if (medications[i].getQuantityInStock() < 10) {
+      cout << medications[i].getMedName() << " is low in stock ("
+           << medications[i].getQuantityInStock() << ")" << endl;
+      cout << "-----------------------------" << endl;
+      foundLowStock = true;
+    }
+  }
+
+  if (!foundLowStock) {
+    cout << "All medications are well stocked!" << endl;
+  }
+}
+
+void Pharmacy::restockMedication(string name, int quantity) {
+  if (quantity <= 0) {
+    cout << "Invalid Quantity" << endl;
+    return;
+  }
+
+  for (int i = 0; i < medicationCount; i++) {
+    if (medications[i].getMedName() == name) {
+      medications[i].setQuantityInStock(medications[i].getQuantityInStock() +
+                                        quantity);
+      cout << "Medication Restocked!" << endl;
+    }
+  }
+}
+
+void Pharmacy::checkExpiredMedication() {
+  time_t now = time(0);
+  tm *ltm = localtime(&now);
+
+  Date today(ltm->tm_mday, ltm->tm_mon + 1, ltm->tm_year + 1900);
+
+  bool foundExpired = false;
+
+  for (int i = 0; i < medicationCount; i++) {
+    if (medications[i].getExpiryDate() < today) {
+      cout << medications[i].getMedName() << " is expired" << endl;
+      cout << "-----------------------------" << endl;
+      foundExpired = true;
+    }
+  }
+  if (!foundExpired)
+    cout << "No expired medications found" << endl;
+}
+
 // getters
 Medication *Pharmacy::getMedication() { return medications; }
 Customer *Pharmacy::getCustomer() { return customers; }

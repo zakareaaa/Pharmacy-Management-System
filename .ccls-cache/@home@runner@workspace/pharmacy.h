@@ -37,4 +37,9 @@ public:
   void printMedication();
   void printCustomer();
   void removeCustomer(string);
+
+  void checkLowStock();
+  void restockMedication(string, int);
+
+  void checkExpiredMedication();
 };
