@@ -6,7 +6,7 @@ OffTheShelf::OffTheShelf(const string &Name, const string &desc, double price_,
                          int quant, const string &code, int eday, int emonth,
                          int eyear, bool bogof, int day, int month, int year)
     : Medication(Name, desc, price_, quant, code, Date(eday, emonth, eyear)),
-      BOGOF(bogof), OfferEnds(day, month, year) {
+      OfferEnds(day, month, year), BOGOF(bogof) {
   // Constructor body empty - everything initialized in initializer list
 }
 
@@ -20,7 +20,6 @@ Date OffTheShelf::getOfferEnds() const { return OfferEnds; }
 
 void OffTheShelf::print() {
   Medication::print(); // Call base class print()
-
   // Create a copy of OfferEnds to modify for display
   Date displayDate = OfferEnds;
 
