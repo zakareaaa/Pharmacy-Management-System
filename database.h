@@ -12,17 +12,17 @@ using namespace std;
 class Database{
     private:
         sqlite3* db;
-        string dbName;
+        string dbPath;
         bool executeSQL(const string& sql);
     public:
         Database(const string& path = "pharmacy.db");
         ~Database();
 
-        bool initilizeDatabase();
+        bool initializeDatabase();
 
         bool savePharmacy(const Pharmacy& pharmacy);
         bool loadPharmacy(const Pharmacy& pharmacy);
-        bool deletePharmacy(const Pharmacy& pharmacy);
+        bool deletePharmacy(int pharmacyId);
         int getPharmacyCount();
 
         bool saveCustomer(int pharmacyId, const Customer& customer);

@@ -1,3 +1,6 @@
+#ifndef PHARMACY_H
+#define PHARMACY_H
+
 #include "customer.h"
 #include "medication.h"
 #include <iostream>
@@ -25,11 +28,12 @@ public:
   void setMedications(Medication *, int);
   void setCustomers(Customer *, int);
   // getters
-  string getPharmacyName();
-  Medication *getMedication();
-  Customer *getCustomer();
-  int getMedicationCount();
-  int getCustomerCount();
+  string getPharmacyName()const;
+  Medication *getMedication()const;
+  Customer *getCustomer()const;
+  int getMedicationCount()const;
+  int getCustomerCount()const;
+  int getPharmacyId()const;
   // functions
   void AddMedication(Medication);
   void AddCustomer(Customer);
@@ -43,3 +47,4 @@ public:
 
   void checkExpiredMedication();
 };
+#endif

@@ -1,388 +1,273 @@
-#include "address.h"
-#include "customer.h"
-#include "date.h"
-#include "medication.h"
-#include "offtheshelf.h"
+#include "database.h"
 #include "pharmacy.h"
-#include "prescription.h"
+#include "medication.h"
+#include "customer.h"
+#include "address.h"
+#include "date.h"
 #include <iostream>
 #include <string>
-
 using namespace std;
+
 int main() {
+    Database db("pharmacy.db");
 
-  int pNum = 0; // keeps track of the number of pharmacies added
-  cout << "Welcome to the Pharmacy Management System" << endl;
-  int pharmacySize = 0;
-  // setting the size of the pharmacy array
-  cout << "Enter Number Of Pharmacies: ";
-  // input validation
-  while (pharmacySize <= 0)
-    cin >> pharmacySize;
-  cout << endl;
+    if (!db.initializeDatabase()) {
+        cout << "Failed to initialize database!" << endl;
+        return 1;
+    }
 
-  Pharmacy *p = new Pharmacy[pharmacySize];
-  int choice = -1;
-  while (choice != 0) {
-    // menu
-    cout << "\n╔════════════════════════════════════╗" << endl;
-    cout << "║  PHARMACY MANAGEMENT SYSTEM        ║" << endl;
-    cout << "╚════════════════════════════════════╝" << endl;
-    cout << "1. Add a new pharmacy" << endl;
-    cout << "2. Add Medication To A Pharmacy" << endl;
-    cout << "3. Add Customer To A Pharmacy" << endl;
-    cout << "4. Remove Medication From A Pharmacy" << endl;
-    cout << "5. Remove Customer From A Pharmacy" << endl;
-    cout << "6. Display Medication Inventory" << endl;
-    cout << "7. Display Customer List" << endl;
-    cout << "8. Check Low Stock" << endl;            // ✅ NEW
-    cout << "9. Restock Medication" << endl;         // ✅ NEW
-    cout << "10. Check Expired Medications" << endl; // ✅ NEW
-    cout << "0. Exit" << endl;
-    cout << "════════════════════════════════════" << endl;
-    cout << "Enter choice: ";
-    cin >> choice;
+    cout << "Welcome to the Pharmacy Management System!" << endl;
+    int choice = -1;
 
-    if (choice == 1) {
-      // keep track of the number of pharmacies added (making sure it doesn't
-      // exceed the size of the array)
-      if (pNum < pharmacySize) {
-        string Pname;
-        int medicationNum = 0, customerNum = 0;
-        cout << "Enter Pharmacy Name: ";
-        cin >> Pname;
-        cout << "Enter Number Of Medications: ";
-        while (medicationNum <= 0)
-          cin >> medicationNum;
-        Medication *m1 = new Medication[medicationNum];
-        for (int i = 0; i < medicationNum; i++) {
-          string medName, desc, bar;
-          double price;
-          int quantity, day, month, year;
-          cout << "Medication NO." << i + 1 << " Info" << endl;
-          cout << "Enter Medication Name: ";
-          cin >> medName;
-          cout << "Enter Medication Description: ";
-          cin >> desc;
-          cout << "Enter Medication Price: ";
-          cin >> price;
-          cout << "Enter Medication Quantity: ";
-          cin >> quantity;
-          cout << "Enter Barcode: ";
-          cin >> bar;
-          cout << "Enter Expiry Date" << endl;
-          cout << "Day: ";
-          cin >> day;
-          cout << "Month: ";
-          cin >> month;
-          cout << "Year: ";
-          cin >> year;
-          cout << endl;
-          m1[i] = Medication(medName, desc, price, quantity, bar,
-                             Date(day, month, year));
-        }
-        cout << "Medications Added!" << endl;
-        cout << endl;
-        cout << "Enter Number Of Customers: ";
-        while (customerNum <= 0)
-          cin >> customerNum;
-        Customer *c1 = new Customer[customerNum];
-        for (int i = 0; i < customerNum; i++) {
-          string cName, city, street, email, phoneNum;
-          cout << endl;
-          cout << "Customer NO." << i + 1 << " Info" << endl;
-          cout << "Enter Customer Name: ";
-          cin >> cName;
-          cout << "City: ";
-          cin >> city;
-          cout << "Street: ";
-          cin >> street;
-          cout << "Email: ";
-          cin >> email;
-          cout << "Phone Number: ";
-          cin >> phoneNum;
-          c1[i].setName(cName);
-          c1[i].setAddress(Address(email, city, phoneNum, street));
-        }
-        cout << endl;
-        cout << "Customers Added!" << endl;
-        p[pNum].setCustomers(c1, customerNum);
-        p[pNum].setMedications(m1, medicationNum);
-        p[pNum].setPharmacyName(Pname);
+    while (choice != 0) {
+        cout << "\nMenu:\n";
+        cout << "1. Add a new pharmacy\n";
+        cout << "2. Add medication to a pharmacy\n";
+        cout << "3. Add customer to a pharmacy\n";
+        cout << "4. Remove medication\n";
+        cout << "5. Remove customer\n";
+        cout << "6. Display medication inventory\n";
+        cout << "7. Display customers\n";
+        cout << "8. Check low stock\n";
+        cout << "9. Restock medication\n";
+        cout << "10. Check expired medications\n";
+        cout << "0. Exit\n";
+        cout << "Enter choice: ";
+        cin >> choice;
+        cin.ignore(); // remove leftover newline
 
-        delete[] m1;
-        delete[] c1;
+        if (choice == 1) {
+            // Add Pharmacy
+            string name;
+            cout << "Enter Pharmacy Name: ";
+            getline(cin, name);
 
-        cout << "Pharmacy Added!" << endl;
-        cout << endl;
-        pNum++;
-      } else {
-        // if the pharmacy array is full
-        int choice2 = -1;
-        // resize the array
-        cout << "Maximum Number Of Pharmacies Reached" << endl;
-        cout << "1.Increase Size" << endl;
-        cout << "0.Return To Menu" << endl;
-        cin >> choice2;
-        cout << endl;
-        while (choice2 != 0) {
-          if (choice2 == 1) {
-            int newSize;
-            cout << "Enter New Size: ";
-            cin >> newSize;
-            if (newSize < pNum) {
-              newSize = pNum;
+            Pharmacy p;
+            p.setPharmacyName(name);
+
+            if (db.savePharmacy(p)) {
+                cout << "Pharmacy added successfully with ID: " << p.getPharmacyId() << endl;
+            } else {
+                cout << "Error saving pharmacy." << endl;
             }
-            Pharmacy *p2 = new Pharmacy[newSize];
-            for (int i = 0; i < pharmacySize; i++) {
-              p2[i].setMedications(p[i].getMedication(),
-                                   p[i].getMedicationCount());
-              p2[i].setCustomers(p[i].getCustomer(), p[i].getCustomerCount());
-              p2[i].setPharmacyName(p[i].getPharmacyName());
+        }
+
+        else if (choice == 2) {
+            // Add Medication
+            int pharmacyId;
+            cout << "Enter Pharmacy ID: ";
+            cin >> pharmacyId;
+            cin.ignore();
+
+            string medName, desc, barcode;
+            double price;
+            int quantity, day, month, year;
+
+            cout << "Medication Name: ";
+            getline(cin, medName);
+            cout << "Description: ";
+            getline(cin, desc);
+            cout << "Price: ";
+            cin >> price;
+            cout << "Quantity: ";
+            cin >> quantity;
+            cin.ignore();
+            cout << "Barcode: ";
+            getline(cin, barcode);
+            cout << "Expiry Day Month Year: ";
+            cin >> day >> month >> year;
+            cin.ignore();
+
+            Medication med(medName, desc, price, quantity, barcode, Date(day, month, year));
+            if (db.saveMedication(pharmacyId, med)) {
+                cout << "Medication saved successfully!" << endl;
+            } else {
+                cout << "Error saving medication." << endl;
             }
-            delete[] p;
-            p = p2;
-            pharmacySize = newSize;
-            cout << "Pharmacies Resized!" << endl;
-            cout << endl;
-            break;
-          }
         }
-      }
-    }
-    if (choice == 2) {
-      string Pname;
-      int index, count = 0;
-      cout << "Enter Pharmacy Name: ";
-      cin >> Pname;
-      cout << endl;
-      for (int i = 0; i < pharmacySize; i++) {
-        if (p[i].getPharmacyName() == Pname) {
-          count++;
-          index = i;
-        }
-      }
-      if (count == 0) {
-        cout << endl << "Pharmacy Not Found" << endl;
-      } else {
-        string medName, desc, bar;
-        int quantity, day, month, year;
-        double price;
-        cout << "Enter Medication name: ";
-        cin >> medName;
-        cout << "Enter Description: ";
-        cin >> desc;
-        cout << "Enter Price: ";
-        cin >> price;
-        cout << "Enter Quantity: ";
-        cin >> quantity;
-        cout << "Enter Barcode: ";
-        cin >> bar;
-        cout << "Enter Expiry Date" << endl;
-        cout << "Day: ";
-        cin >> day;
-        cout << "Month: ";
-        cin >> month;
-        cout << "Year: ";
-        cin >> year;
-        p[index].AddMedication(Medication(medName, desc, price, quantity, bar,
-                                          Date(day, month, year)));
-        cout << endl << "Medication Added!" << endl;
-        cout << endl;
-      }
-    }
-    if (choice == 3) {
-      string Pname;
-      int index, count = 0;
-      cout << "Enter Pharmacy Name: ";
-      cin >> Pname;
-      for (int i = 0; i < pNum; i++) {
-        if (p[i].getPharmacyName() == Pname) {
-          count++;
-          index = i;
-        }
-      }
-      if (count == 0) {
-        cout << endl << "Pharmacy Not Found" << endl;
-      } else {
-        string cName, city, email, phoneNum, street;
-        cout << "Enter Customer Name: ";
-        cin >> cName;
-        cout << "City: ";
-        cin >> city;
-        cout << "Street: ";
-        cin >> street;
-        cout << "Email: ";
-        cin >> email;
-        cout << "Phone number: ";
-        cin >> phoneNum;
-        p[index].AddCustomer(
-            Customer(cName, Address(email, city, phoneNum, street)));
-        cout << "Customer Added!" << endl;
-        cout << endl;
-      }
-    }
-    if (choice == 4) {
-      string Pname, medName;
-      int index, count = 0;
-      cout << "Enter Pharmacy Name: ";
-      cin >> Pname;
-      for (int i = 0; i < pNum; i++) {
-        if (p[i].getPharmacyName() == Pname) {
-          count++;
-          index = i;
-        }
-      }
-      if (count == 0) {
-        cout << "Pharmacy Not Found" << endl;
-      } else {
-        string medName;
-        cout << "Enter Name Of Medication You Want To Remove: ";
-        cin >> medName;
-        p[index].removeMedication(medName);
-        cout << endl;
-        cout << "Medication Removed Successfuly!" << endl;
-        cout << endl;
-      }
-    }
-    if (choice == 5) {
-      string Pname, cName;
-      int index, count = 0;
-      cout << "Enter Pharmacy Name: ";
-      cin >> Pname;
-      for (int i = 0; i < pNum; i++) {
-        if (p[i].getPharmacyName() == Pname) {
-          count++;
-          index = i;
-        }
-      }
-      if (count == 0) {
-        cout << "Pharmacy Not Found" << endl;
-      } else {
-        string cName;
-        cout << "Enter Name Of Customer You Want To Remove: ";
-        cin >> cName;
-        p[index].removeCustomer(cName);
-        cout << endl;
-        cout << "Customer Removed Successfuly!" << endl;
-        cout << endl;
-      }
-    }
-    if (choice == 6) {
-      string Pname;
-      int index, count = 0;
-      cout << "Enter Pharmacy Name: ";
-      cin >> Pname;
-      cout << endl;
-      for (int i = 0; i < pNum; i++) {
-        if (p[i].getPharmacyName() == Pname) {
-          count++;
-          index = i;
-        }
-      }
-      if (count == 0) {
-        cout << "Pharmacy Not Found" << endl;
-      } else {
-        p[index].printMedication();
-        cout << endl;
-      }
-    }
-    if (choice == 7) {
-      string Pname;
-      int index, count = 0;
-      cout << "Enter Pharmacy Name: ";
-      cin >> Pname;
-      cout << endl;
-      for (int i = 0; i < pNum; i++) {
-        if (p[i].getPharmacyName() == Pname) {
-          count++;
-          index = i;
-        }
-      }
-      if (count == 0) {
-        cout << "Pharmacy Not Found" << endl;
-      } else {
-        p[index].printCustomer();
-        cout << endl;
-      }
-    }
 
-    if (choice == 8) {
-      string Pname;
-      int index, count = 0;
-      cout << "Enter Pharmacy Name: ";
-      cin >> Pname;
-      cout << endl;
+        else if (choice == 3) {
+            // Add Customer
+            int pharmacyId;
+            cout << "Enter Pharmacy ID: ";
+            cin >> pharmacyId;
+            cin.ignore();
 
-      for (int i = 0; i < pNum; i++) {
-        if (p[i].getPharmacyName() == Pname) {
-          count++;
-          index = i;
+            string custName, city, street, email, phone;
+            cout << "Customer Name: ";
+            getline(cin, custName);
+            cout << "City: ";
+            getline(cin, city);
+            cout << "Street: ";
+            getline(cin, street);
+            cout << "Email: ";
+            getline(cin, email);
+            cout << "Phone: ";
+            getline(cin, phone);
+
+            Customer cust(custName, Address(email, city, phone, street));
+            if (db.saveCustomer(pharmacyId, cust)) {
+                cout << "Customer saved successfully!" << endl;
+            } else {
+                cout << "Error saving customer." << endl;
+            }
         }
-      }
 
-      if (count == 0) {
-        cout << "Pharmacy Not Found" << endl;
-      } else {
-        p[index].checkLowStock();
-        cout << endl;
-      }
+        else if (choice == 4) {
+            // Remove Medication
+            int pharmacyId;
+            string medName;
+            cout << "Enter Pharmacy ID: ";
+            cin >> pharmacyId;
+            cin.ignore();
+            cout << "Enter Medication Name to remove: ";
+            getline(cin, medName);
+
+            if (db.deleteMedication(pharmacyId, medName)) {
+                cout << "Medication removed successfully!" << endl;
+            } else {
+                cout << "Error removing medication." << endl;
+            }
+        }
+
+        else if (choice == 5) {
+            // Remove Customer
+            int pharmacyId;
+            string custName;
+            cout << "Enter Pharmacy ID: ";
+            cin >> pharmacyId;
+            cin.ignore();
+            cout << "Enter Customer Name to remove: ";
+            getline(cin, custName);
+
+            if (db.deleteCustomer(pharmacyId, custName)) {
+                cout << "Customer removed successfully!" << endl;
+            } else {
+                cout << "Error removing customer." << endl;
+            }
+        }
+
+        else if (choice == 6) {
+            // Display Medication
+            int pharmacyId;
+            cout << "Enter Pharmacy ID: ";
+            cin >> pharmacyId;
+            cin.ignore();
+
+            int medCount;
+            Medication* meds = db.loadMedications(pharmacyId, medCount);
+            if (!meds || medCount == 0) {
+                cout << "No medications found." << endl;
+            } else {
+                cout << "Medications for Pharmacy ID " << pharmacyId << ":\n";
+                for (int i = 0; i < medCount; i++) {
+                    cout << meds[i].getMedName() << " | Qty: " << meds[i].getQuantityInStock()
+                         << " | Price: " << meds[i].getPrice() << endl;
+                }
+                delete[] meds;
+            }
+        }
+
+        else if (choice == 7) {
+            // Display Customers
+            int pharmacyId;
+            cout << "Enter Pharmacy ID: ";
+            cin >> pharmacyId;
+            cin.ignore();
+
+            int custCount;
+            Customer* custs = db.loadCustomers(pharmacyId, custCount);
+            if (!custs || custCount == 0) {
+                cout << "No customers found." << endl;
+            } else {
+                cout << "Customers for Pharmacy ID " << pharmacyId << ":\n";
+                for (int i = 0; i < custCount; i++) {
+                    cout << custs[i].getCustomerName() << " | " << custs[i].getAddress().getCity() << endl;
+                }
+                delete[] custs;
+            }
+        }
+
+        else if (choice == 8) {
+            // Check Low Stock
+            int pharmacyId;
+            cout << "Enter Pharmacy ID: ";
+            cin >> pharmacyId;
+            cin.ignore();
+
+            int medCount;
+            Medication* meds = db.loadMedications(pharmacyId, medCount);
+            if (!meds) continue;
+
+            cout << "Low stock medications (<5 units):\n";
+            for (int i = 0; i < medCount; i++) {
+                if (meds[i].getQuantityInStock() < 5) {
+                    cout << meds[i].getMedName() << " | Qty: " << meds[i].getQuantityInStock() << endl;
+                }
+            }
+            delete[] meds;
+        }
+
+        else if (choice == 9) {
+            // Restock Medication
+            int pharmacyId;
+            string medName;
+            int quantity;
+            cout << "Enter Pharmacy ID: ";
+            cin >> pharmacyId;
+            cin.ignore();
+            cout << "Medication Name: ";
+            getline(cin, medName);
+            cout << "Quantity to add: ";
+            cin >> quantity;
+            cin.ignore();
+
+            // Load meds, find the one to restock
+            int medCount;
+            Medication* meds = db.loadMedications(pharmacyId, medCount);
+            if (!meds) continue;
+
+            int currentQty = -1;
+            for (int i = 0; i < medCount; i++) {
+                if (meds[i].getMedName() == medName) {
+                    currentQty = meds[i].getQuantityInStock() + quantity;
+                    break;
+                }
+            }
+            delete[] meds;
+
+            if (currentQty != -1 && db.updateMedicationStock(pharmacyId, medName, currentQty)) {
+                cout << "Medication restocked successfully!" << endl;
+            } else {
+                cout << "Error restocking medication." << endl;
+            }
+        }
+
+        else if (choice == 10) {
+            // Check Expired Medications
+            int pharmacyId;
+            cout << "Enter Pharmacy ID: ";
+            cin >> pharmacyId;
+            cin.ignore();
+
+            int medCount;
+            Medication* meds = db.loadMedications(pharmacyId, medCount);
+            if (!meds) continue;
+
+            Date today; // Assuming default constructor gives current date
+            cout << "Expired medications:\n";
+            for (int i = 0; i < medCount; i++) {
+                if (meds[i].getExpiryDate() < today) {
+                    cout << meds[i].getMedName() << " | Exp: "
+                         << meds[i].getExpiryDate().getDay() << "/"
+                         << meds[i].getExpiryDate().getMonth() << "/"
+                         << meds[i].getExpiryDate().getYear() << endl;
+                }
+            }
+            delete[] meds;
+        }
     }
 
-    if (choice == 9) {
-      string Pname;
-      int index, count = 0;
-      cout << "Enter Pharmacy Name: ";
-      cin >> Pname;
-      cout << endl;
-
-      for (int i = 0; i < pNum; i++) {
-        if (p[i].getPharmacyName() == Pname) {
-          count++;
-          index = i;
-        }
-      }
-
-      if (count == 0) {
-        cout << "Pharmacy Not Found" << endl;
-      } else {
-        string medName;
-        int quantity;
-        cout << "Enter Medication Name to Restock: ";
-        cin >> medName;
-        cout << "Enter Quantity to Add: ";
-        cin >> quantity;
-
-        p[index].restockMedication(medName, quantity);
-        cout << endl;
-      }
-    }
-
-    if (choice == 10) {
-      string Pname;
-      int index, count = 0;
-      cout << "Enter Pharmacy Name: ";
-      cin >> Pname;
-      cout << endl;
-
-      for (int i = 0; i < pNum; i++) {
-        if (p[i].getPharmacyName() == Pname) {
-          count++;
-          index = i;
-        }
-      }
-
-      if (count == 0) {
-        cout << "Pharmacy Not Found" << endl;
-      } else {
-        p[index].checkExpiredMedication();
-        cout << endl;
-      }
-    }
-  }
-
-  cout << "Thank you for using our program!" << endl;
-  delete[] p;
-
-  return 0;
+    cout << "Exiting program. Goodbye!" << endl;
+    return 0;
 }

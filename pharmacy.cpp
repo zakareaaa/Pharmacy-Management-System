@@ -199,8 +199,9 @@ void Pharmacy::checkExpiredMedication() {
 }
 
 // getters
-Medication *Pharmacy::getMedication() { return medications; }
-Customer *Pharmacy::getCustomer() { return customers; }
-string Pharmacy::getPharmacyName() { return pharmacyName; }
-int Pharmacy::getMedicationCount() { return medicationCount; }
-int Pharmacy::getCustomerCount() { return customerCount; }
+Medication *Pharmacy::getMedication() const{ return medications; }
+Customer *Pharmacy::getCustomer() const{ return customers; }
+string Pharmacy::getPharmacyName() const{ return pharmacyName; }
+int Pharmacy::getMedicationCount() const{ return medicationCount; }
+int Pharmacy::getCustomerCount() const{ return customerCount; }
+int Pharmacy::getPharmacyId() const{ return pharmacyId; }
